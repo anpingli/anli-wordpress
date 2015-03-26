@@ -8,6 +8,8 @@ __run_supervisor() {
 supervisord -n
 }
 
-# Call all functions
-#__check
+if [ ! -d /var/lib/mysql/wordpress ] ; then
+   cp -r /root/mysql/* /var/lib/mysql/
+fi
+
 __run_supervisor

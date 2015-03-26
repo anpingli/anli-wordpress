@@ -20,6 +20,7 @@ rm -rf /var/www/html/*
 curl -k -o wordpress.tar.gz https://wordpress.org/latest.tar.gz 
 tar xvzf wordpress.tar.gz wordpress
 cp -r wordpress/* /var/www/html/.
+cp -r wordplugins/* /var/www/html/wp-content/plugins
 
 sed -e "s/database_name_here/$WORDPRESS_DB/
 s/username_here/$WORDPRESS_DB/
@@ -38,7 +39,7 @@ chown -R apache:apache /var/www/html
 
 __renew_mysql() {
 
-supervisorctl stop mysqld 
+supervisorctl stop mysqld
 killall mysqld
 # Hack to get MySQL up and running... I need to look into it more.
 #yum -y erase mariadb mariadb-server
@@ -53,14 +54,14 @@ sleep 10
 mysqladmin -u root password $MYSQL_PASSWORD 
 mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE wordpress; GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
 sleep 10
+killall mysqld
+
+cp -r /var/lib/mysql /root/
 }
 
 
 # Call all functions
 __handle_passwords
-
 supervisorctl stop httpd
 __renew_wordpress
 __renew_mysql
-supervisorctl start httpd
-
