@@ -20,10 +20,15 @@ rm -rf /var/www/html/*
 curl -k -o wordpress.tar.gz https://wordpress.org/latest.tar.gz 
 tar xvzf wordpress.tar.gz wordpress
 cp -r wordpress/* /var/www/html/.
+
 cp -r wordplugins/* /var/www/html/wp-content/plugins
+sed -i 's/fonts.googleapis.com/font.useso.com/' /var/www/html/wp-includes/script-loader.php
+sed -i 's/fonts.googleapis.com/font.useso.com/' /var/www/html/wp-content/themes/*/functions.php
+sed -i 's/fonts.googleapis.com/font.useso.com/' /var/www/html/wp-includes/js/tinymce/plugins/compat3x/css/dialog.css
 
 sed -e "s/database_name_here/$WORDPRESS_DB/
 s/username_here/$WORDPRESS_DB/
+s/localhost/127.0.0.1/
 s/password_here/$WORDPRESS_PASSWORD/
 /'AUTH_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
 /'SECURE_AUTH_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
