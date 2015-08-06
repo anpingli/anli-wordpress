@@ -14,6 +14,6 @@ if [ "${DB_HOST:-127.0.0.1}" =  "127.0.0.1" ] &&  [ ! -d /var/lib/mysql/${DB_NAM
 fi
 
 __run_supervisor() {
-supervisord -n
+exec supervisord -n
 }
 __run_supervisor

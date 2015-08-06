@@ -21,4 +21,4 @@ EXPOSE 80 22
 RUN chmod 755 /wordinstall.sh /etc/apache2/foreground.sh /start.sh
 RUN /wordinstall.sh
 
-CMD ["/bin/bash", "/start.sh"]
+CMD ["/start.sh"]
