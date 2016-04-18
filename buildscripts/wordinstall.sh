@@ -14,14 +14,12 @@ echo $WORDPRESS_PASSWORD > /wordpress-db-pw.txt
 }
 
 __new_wordpress() {
-rm -rf wordpress.tar.gz
-rm -rf wordpress
-rm -rf /var/www/html/*
 curl -k -o wordpress.tar.gz https://wordpress.org/latest.tar.gz 
 tar xvzf wordpress.tar.gz wordpress
 cp -r wordpress/* /var/www/html/.
-
+rm -rf wordpress.tar.gz wordpress
 cp -r wordplugins/* /var/www/html/wp-content/plugins
+
 sed -i 's/fonts.googleapis.com/font.useso.com/' /var/www/html/wp-includes/script-loader.php
 sed -i 's/fonts.googleapis.com/font.useso.com/' /var/www/html/wp-content/themes/*/functions.php
 sed -i 's/fonts.googleapis.com/font.useso.com/' /var/www/html/wp-includes/js/tinymce/plugins/compat3x/css/dialog.css
